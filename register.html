@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Profile - Unified Education Data Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#0B0F19',
+                        'brand-light': '#F9FAFB',
+                        'accent-sky': '#38bdf8',
+                        'accent-violet': '#8b5cf6',
+                        'accent-amber': '#f59e0b',
+                        'accent-emerald': '#34d399',
+                    }
+                }
+            }
+        }
+    </script>
+     <style>
+        .form-section { display: none; }
+        .form-section.active { display: block; }
+    </style>
+</head>
+<body class="bg-brand-dark text-slate-300 font-sans">
+
+    <!-- Header -->
+    <header id="header" class="bg-brand-dark/70 backdrop-blur-lg sticky top-0 left-0 right-0 z-50 border-b border-slate-700/50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg width="20" height="24" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="160" fill="black"/>
+                    <polygon points="10,10 10,150 25,150 25,35 75,80 25,125 25,110 55,80 25,50 25,35 90,80 25,125" fill="white"/>
+                    </svg>
+                    <a href="index.html" class="text-2xl font-bold text-white tracking-wider">ROMPTUS</a>
+                </div>
+                 <nav id="nav-menu" class="hidden md:flex items-center space-x-8">
+                    <!-- Nav links will be dynamically inserted here -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+        <div id="registration-container">
+            <h1 class="font-serif text-4xl md:text-5xl font-extrabold text-white tracking-tight text-center">Create a New Profile</h1>
+            <p class="mt-4 text-lg text-slate-400 leading-relaxed text-center max-w-3xl mx-auto">
+                Fill out the form below to add a new student, alumnus, or teacher to the database.
+            </p>
+
+            <form id="registration-form" class="mt-12 max-w-3xl mx-auto bg-slate-900/50 p-8 rounded-2xl shadow-xl border border-slate-700/60 backdrop-blur-sm space-y-6">
+                
+                <div id="form-step-container">
+                    <!-- Step 1: Account Credentials -->
+                    <div data-step="1" class="form-section active">
+                        <h2 class="font-serif text-2xl font-bold text-white mb-4">Step 1: Account Credentials</h2>
+                         <div class="space-y-4">
+                             <div>
+                                <label for="email" class="block text-sm font-medium text-slate-300">Email Address</label>
+                                <input type="email" id="email" required class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                            </div>
+                             <div>
+                                <label for="password" class="block text-sm font-medium text-slate-300">Password</label>
+                                <input type="password" id="password" required class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                            </div>
+                         </div>
+                    </div>
+                    
+                    <!-- Step 2: Basic Info & Profile Type -->
+                    <div data-step="2" class="form-section">
+                        <h2 class="font-serif text-2xl font-bold text-white mb-4">Step 2: Basic Information</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                             <div>
+                                <label for="profileType" class="block text-sm font-medium text-slate-300">I am a...</label>
+                                <select id="profileType" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                                    <option value="student">Student</option>
+                                    <option value="alumnus">Alumnus</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-slate-300">Full Name</label>
+                                <input type="text" id="name" required class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                            </div>
+                            <div>
+                                <label for="dob" class="block text-sm font-medium text-slate-300">Date of Birth</label>
+                                <input type="date" id="dob" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                            </div>
+                             <div class="md:col-span-2">
+                                <label for="address" class="block text-sm font-medium text-slate-300">Address</label>
+                                <input type="text" id="address" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label class="block text-sm font-medium text-slate-300">Profile Picture</label>
+                                <div class="mt-1 flex items-center gap-4">
+                                    <img id="photo-preview" src="https://placehold.co/150x150/0B0F19/475569?text=Upload" alt="Photo Preview" class="w-20 h-20 rounded-full object-cover bg-slate-700">
+                                    <label for="photoUpload" class="cursor-pointer bg-slate-700 text-white py-2 px-4 rounded-md font-semibold hover:bg-slate-600 transition-all">
+                                        <span>Upload Photo</span>
+                                        <input id="photoUpload" name="photoUpload" type="file" class="sr-only" accept="image/*">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Detailed Info -->
+                    <div data-step="3" class="form-section">
+                        <!-- Student/Alumnus Details -->
+                        <div id="student-details" class="space-y-6">
+                            <h2 class="font-serif text-2xl font-bold text-white">Step 3: Education & Career</h2>
+                             <div>
+                                <h3 class="font-semibold text-lg text-white mb-2">School Records</h3>
+                                <div id="academic-records-container" class="space-y-3"></div>
+                                <button type="button" class="add-field-btn mt-2 text-sm text-accent-sky font-semibold" data-target="academic-records-container">+ Add School Record</button>
+                            </div>
+                             <div>
+                                <h3 class="font-semibold text-lg text-white mb-2">College Records</h3>
+                                <div id="college-records-container" class="space-y-3"></div>
+                                <button type="button" class="add-field-btn mt-2 text-sm text-accent-sky font-semibold" data-target="college-records-container">+ Add College Record</button>
+                            </div>
+                             <div>
+                                <h3 class="font-semibold text-lg text-white mb-2">Internships</h3>
+                                <div id="internships-container" class="space-y-3"></div>
+                                <button type="button" class="add-field-btn mt-2 text-sm text-accent-sky font-semibold" data-target="internships-container">+ Add Internship</button>
+                            </div>
+                             <div>
+                                <h3 class="font-semibold text-lg text-white mb-2">Skills</h3>
+                                <div id="skills-container" class="space-y-3"></div>
+                                <button type="button" class="add-field-btn mt-2 text-sm text-accent-sky font-semibold" data-target="skills-container">+ Add Skill</button>
+                            </div>
+                        </div>
+                        <!-- Teacher Details -->
+                        <div id="teacher-details" class="space-y-4">
+                             <h2 class="font-serif text-2xl font-bold text-white">Step 3: Professional Info</h2>
+                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="teacher-school" class="block text-sm font-medium text-slate-300">School/Institution</label>
+                                    <input type="text" id="teacher-school" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                                </div>
+                                 <div>
+                                    <label for="teacher-subject" class="block text-sm font-medium text-slate-300">Subject</label>
+                                    <input type="text" id="teacher-subject" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                                </div>
+                                <div class="md:col-span-2">
+                                     <label for="teacher-experience" class="block text-sm font-medium text-slate-300">Years of Experience</label>
+                                    <input type="number" id="teacher-experience" class="mt-1 w-full bg-slate-800 border-slate-600 rounded-md text-white p-2">
+                                </div>
+                            </div>
+                             <div>
+                                <h3 class="font-semibold text-lg text-white mb-2">Qualifications</h3>
+                                <div id="qualifications-container" class="space-y-3"></div>
+                                <button type="button" class="add-field-btn mt-2 text-sm text-accent-sky font-semibold" data-target="qualifications-container">+ Add Qualification</button>
+                             </div>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <!-- Navigation -->
+                <div class="flex justify-between pt-4">
+                    <button type="button" id="prev-btn" class="bg-slate-600 text-white py-2 px-5 rounded-md font-semibold hover:bg-slate-700 transition-all hidden">Previous</button>
+                    <button type="button" id="next-btn" class="bg-accent-violet text-white py-2 px-5 rounded-md font-semibold hover:bg-violet-700 transition-all">Next</button>
+                    <button type="submit" id="submit-btn" class="hidden bg-accent-emerald text-white py-2 px-5 rounded-md font-semibold hover:bg-emerald-600 transition-all">Submit Profile</button>
+                </div>
+
+            </form>
+        </div>
+
+        <div id="success-message" class="hidden max-w-3xl mx-auto text-center">
+            <div class="bg-slate-900/50 p-8 rounded-2xl shadow-xl border border-slate-700/60 backdrop-blur-sm">
+                <svg class="mx-auto h-16 w-16 text-accent-emerald" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h2 class="mt-4 font-serif text-3xl font-bold text-white">Profile Registered!</h2>
+                <p class="mt-2 text-slate-300">Your new profile has been successfully created.</p>
+                <p class="mt-4 text-sm text-slate-400">Your Generated ID is:</p>
+                <p id="generated-id" class="mt-1 text-2xl font-mono py-2 px-4 bg-slate-800 rounded-md inline-block tracking-widest"></p>
+                <div class="mt-6">
+                    <a href="./signin.html" class="bg-accent-sky text-white py-2 px-5 rounded-md font-semibold hover:bg-sky-600 transition-all">Sign In to Continue</a>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const navMenu = document.getElementById('nav-menu');
+        const loggedInUser = localStorage.getItem('loggedInUser');
+
+        if (loggedInUser) {
+             navMenu.innerHTML = `
+                <a href="tracker.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>Tracker</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="about.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>About Team</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                <button id="signout-btn" class="bg-red-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-600 transition-all">Sign Out</button>
+            `;
+             document.getElementById('signout-btn').addEventListener('click', () => {
+                localStorage.removeItem('loggedInUser');
+                window.location.href = 'index.html';
+            });
+        } else {
+            navMenu.innerHTML = `
+                <a href="tracker.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>Tracker</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="about.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>About Team</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                <a href="signin.html" class="text-accent-sky font-semibold">Sign In</a>
+                <a href="register.html" class="bg-accent-violet text-white py-2 px-4 rounded-md font-semibold hover:bg-violet-700 transition-all">Register Profile</a>
+            `;
+        }
+
+        const registrationContainer = document.getElementById('registration-container');
+        const successMessageContainer = document.getElementById('success-message');
+        const form = document.getElementById('registration-form');
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const stepContainer = document.getElementById('form-step-container');
+        const photoUploadInput = document.getElementById('photoUpload');
+        const photoPreview = document.getElementById('photo-preview');
+        const profileTypeSelect = document.getElementById('profileType');
+        let photoDataUrl = null;
+
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        const updateFormState = () => {
+            const profileType = profileTypeSelect.value;
+            const isStudentOrAlumnus = profileType === 'student' || profileType === 'alumnus';
+            document.getElementById('student-details').style.display = isStudentOrAlumnus ? 'block' : 'none';
+            document.getElementById('teacher-details').style.display = profileType === 'teacher' ? 'block' : 'none';
+            
+            stepContainer.querySelectorAll('.form-section').forEach(section => {
+                section.classList.toggle('active', parseInt(section.dataset.step) === currentStep);
+            });
+            prevBtn.classList.toggle('hidden', currentStep === 1);
+            nextBtn.classList.toggle('hidden', currentStep === totalSteps);
+            submitBtn.classList.toggle('hidden', currentStep !== totalSteps);
+        };
+        
+        nextBtn.addEventListener('click', () => { currentStep++; updateFormState(); });
+        prevBtn.addEventListener('click', () => { currentStep--; updateFormState(); });
+        profileTypeSelect.addEventListener('change', updateFormState);
+
+        photoUploadInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    photoPreview.src = e.target.result;
+                    photoDataUrl = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Dynamic fields
+        const fieldTemplates = {
+            'academic-records-container': `<div class="grid grid-cols-2 md:grid-cols-4 gap-2"><input type="text" placeholder="Grade" class="academic-grade bg-slate-800 p-2 text-sm rounded-md"><input type="number" placeholder="Year" class="academic-year bg-slate-800 p-2 text-sm rounded-md"><input type="number" placeholder="%" class="academic-percentage bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="Achievements" class="academic-achievements bg-slate-800 p-2 text-sm rounded-md"></div>`,
+            'college-records-container': `<div class="grid grid-cols-2 md:grid-cols-4 gap-2"><input type="text" placeholder="Degree" class="college-degree bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="Institution" class="college-institution bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="Duration" class="college-duration bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="CGPA" class="college-cgpa bg-slate-800 p-2 text-sm rounded-md"></div>`,
+            'internships-container': `<div class="grid grid-cols-2 md:grid-cols-3 gap-2"><input type="text" placeholder="Company" class="internship-company bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="Role" class="internship-role bg-slate-800 p-2 text-sm rounded-md"><input type="text" placeholder="Duration" class="internship-duration bg-slate-800 p-2 text-sm rounded-md"></div>`,
+            'skills-container': `<div class="grid grid-cols-2 gap-2"><input type="text" placeholder="Skill Name" class="skill-name bg-slate-800 p-2 text-sm rounded-md"><input type="number" placeholder="Proficiency (1-100)" class="skill-proficiency bg-slate-800 p-2 text-sm rounded-md"></div>`,
+            'qualifications-container': `<input type="text" placeholder="e.g., Ph.D. in Physics" class="qualification-input w-full bg-slate-800 p-2 text-sm rounded-md">`,
+        };
+
+        document.querySelectorAll('.add-field-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetId = btn.dataset.target;
+                const container = document.getElementById(targetId);
+                const div = document.createElement('div');
+                div.className = 'p-2 border border-slate-700 rounded-md';
+                div.innerHTML = fieldTemplates[targetId];
+                container.appendChild(div);
+            });
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const profileType = profileTypeSelect.value;
+            const randomId = Math.floor(1000 + Math.random() * 9000);
+            
+            let idPrefix = 'S';
+            if (profileType === 'alumnus') idPrefix = 'A';
+            if (profileType === 'teacher') idPrefix = 'T';
+
+            const newProfileData = {
+                id: idPrefix + randomId,
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                photoUrl: photoDataUrl || `https://placehold.co/150x150/a78bfa/FFFFFF?text=${document.getElementById('name').value.charAt(0)}`,
+                dob: document.getElementById('dob').value,
+                address: document.getElementById('address').value,
+            };
+
+            const newUser = {
+                email: newProfileData.email,
+                password: document.getElementById('password').value,
+                profileId: newProfileData.id
+            };
+
+            let users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            users.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+
+            if (profileType === 'student' || profileType === 'alumnus') {
+                newProfileData.profileType = profileType.charAt(0).toUpperCase() + profileType.slice(1);
+                newProfileData.academicRecords = Array.from(document.querySelectorAll('#academic-records-container > div')).map(div => ({ grade: div.querySelector('.academic-grade').value, year: div.querySelector('.academic-year').value, percentage: div.querySelector('.academic-percentage').value, achievements: div.querySelector('.academic-achievements').value })).filter(r => r.grade);
+                newProfileData.collegeRecords = Array.from(document.querySelectorAll('#college-records-container > div')).map(div => ({ degree: div.querySelector('.college-degree').value, institution: div.querySelector('.college-institution').value, duration: div.querySelector('.college-duration').value, cgpa: div.querySelector('.college-cgpa').value })).filter(r => r.degree);
+                newProfileData.internships = Array.from(document.querySelectorAll('#internships-container > div')).map(div => ({ company: div.querySelector('.internship-company').value, role: div.querySelector('.internship-role').value, duration: div.querySelector('.internship-duration').value })).filter(r => r.company);
+                newProfileData.skills = Array.from(document.querySelectorAll('#skills-container > div')).map(div => ({ skill: div.querySelector('.skill-name').value, proficiency: parseInt(div.querySelector('.skill-proficiency').value) })).filter(r => r.skill);
+
+                let students = JSON.parse(localStorage.getItem('customStudents')) || [];
+                students.push(newProfileData);
+                localStorage.setItem('customStudents', JSON.stringify(students));
+            } else { // Teacher
+                newProfileData.school = document.getElementById('teacher-school').value;
+                newProfileData.subject = document.getElementById('teacher-subject').value;
+                newProfileData.experience = document.getElementById('teacher-experience').value + ' Years';
+                newProfileData.qualifications = Array.from(document.querySelectorAll('.qualification-input')).map(input => input.value).filter(q => q);
+                
+                let teachers = JSON.parse(localStorage.getItem('customTeachers')) || [];
+                teachers.push(newProfileData);
+                localStorage.setItem('customTeachers', JSON.stringify(teachers));
+            }
+
+            document.getElementById('generated-id').textContent = newProfileData.id;
+            registrationContainer.classList.add('hidden');
+            successMessageContainer.classList.remove('hidden');
+        });
+        
+        updateFormState();
+    });
+    </script>
+</body>
+</html>
+

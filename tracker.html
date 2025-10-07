@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Tracker - Unified Education Data Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@800&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Poppins', 'sans-serif'],
+                        'serif': ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        'brand-dark': '#0B0F19',
+                        'brand-light': '#F9FAFB',
+                        'accent-sky': '#38bdf8',
+                        'accent-violet': '#8b5cf6',
+                        'accent-amber': '#f59e0b',
+                        'accent-emerald': '#34d399',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes blob-animation {
+            0% {
+                transform: scale(1) translate(0, 0);
+            }
+
+            100% {
+                transform: scale(1.2) translate(40px, -40px);
+            }
+        }
+
+        .blob {
+            animation: blob-animation 20s infinite alternate;
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body class="bg-brand-dark text-slate-300 font-sans">
+
+    <!-- Header -->
+    <header id="header"
+        class="bg-brand-dark/70 backdrop-blur-lg sticky top-0 left-0 right-0 z-50 border-b border-slate-700/50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <svg width="20" height="24" viewBox="0 0 100 160" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="160" fill="black"/>
+                    <polygon points="10,10 10,150 25,150 25,35 75,80 25,125 25,110 55,80 25,50 25,35 90,80 25,125" fill="white"/>
+                    </svg>
+                    <a href="index.html" class="text-2xl font-bold text-white tracking-wider">ROMPTUS</a>
+                </div>
+                <nav id="nav-menu" class="hidden md:flex items-center space-x-8">
+                    <!-- Nav links will be dynamically inserted here -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 pt-28 pb-16 md:pt-36 md:pb-24">
+        <!-- Search Section -->
+        <section id="search-section" class="relative">
+            <div
+                class="blob absolute rounded-full opacity-20 blur-3xl w-[500px] h-[500px] -top-40 -left-40 bg-accent-amber">
+            </div>
+            <div class="relative z-10 animate-on-scroll">
+                <h1 class="font-serif text-4xl md:text-5xl font-extrabold text-white tracking-tight text-center">Profile
+                    Tracking System</h1>
+                <p class="mt-4 text-lg text-slate-400 leading-relaxed text-center max-w-3xl mx-auto">
+                    Enter a valid Profile ID to request access. An OTP will be sent for verification.
+                </p>
+
+                <div id="search-form"
+                    class="mt-12 max-w-lg mx-auto bg-slate-900/50 p-6 rounded-2xl shadow-xl border border-slate-700/60 backdrop-blur-sm">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div>
+                            <label for="search-query" class="block text-sm font-medium text-slate-300">Profile
+                                ID</label>
+                            <input type="text" id="search-query" placeholder="e.g., A301, S101, T201"
+                                class="mt-1 block w-full bg-slate-800 border border-slate-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-accent-violet focus:border-accent-violet">
+                        </div>
+                    </div>
+                    <button id="search-button"
+                        class="mt-4 w-full bg-accent-violet text-white py-2.5 px-4 rounded-md font-semibold hover:bg-violet-700 transition-all transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-brand-dark focus:ring-accent-violet">Request
+                        Access</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="mt-16">
+            <div id="results-container" class="max-w-4xl mx-auto">
+                <div class="text-center py-10 px-6 bg-slate-900/40 rounded-lg shadow-sm border border-slate-700/50">
+                    <svg class="mx-auto h-12 w-12 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <h3 class="mt-2 text-sm font-semibold text-slate-200">Awaiting Search</h3>
+                    <p class="mt-1 text-sm text-slate-400">Search for a profile or view your own if logged in.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- OTP Modal -->
+    <div id="otp-modal"
+        class="hidden fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl shadow-xl border border-slate-700/60 p-8 max-w-sm w-full text-center">
+            <h2 class="font-serif text-2xl font-bold text-white">Verification Required</h2>
+            <p id="otp-message" class="mt-2 text-slate-400 text-sm">An OTP has been sent to the registered contact of
+                <span id="otp-profile-name" class="font-semibold text-white"></span>.
+            </p>
+
+            <div class="mt-4">
+                <label for="otp-input" class="sr-only">Enter OTP</label>
+                <input type="text" id="otp-input" maxlength="6"
+                    class="w-full bg-slate-800 border-slate-600 rounded-md text-white p-3 text-center text-2xl tracking-[.5em]">
+            </div>
+
+            <p id="otp-prototype-info" class="mt-3 text-xs text-amber-400"></p>
+            <div id="otp-error" class="text-red-400 text-sm mt-2 hidden">Invalid OTP. Please try again.</div>
+
+            <div class="mt-6 flex gap-4">
+                <button id="otp-cancel-btn"
+                    class="w-full bg-slate-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-slate-700 transition-all">Cancel</button>
+                <button id="otp-verify-btn"
+                    class="w-full bg-accent-emerald text-white py-2 px-4 rounded-md font-semibold hover:bg-emerald-600 transition-all">Verify</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="bg-brand-dark border-t border-slate-700/50">
+        <div class="container mx-auto px-6 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="text-center md:text-left">
+                    <h4 class="font-bold text-white text-lg">Unified Education Data Hub</h4>
+                    <p class="text-sm text-slate-400">by The Hashiras</p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <p class="text-sm text-slate-400">&copy; 2025 EduHub. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navMenu = document.getElementById('nav-menu');
+            const loggedInUserJSON = localStorage.getItem('loggedInUser');
+            const loggedInUser = loggedInUserJSON ? JSON.parse(loggedInUserJSON) : null;
+
+            if (loggedInUser) {
+                navMenu.innerHTML = `
+                    <a href="tracker.html" class="group relative text-accent-sky font-bold"><span>Tracker</span><span class="absolute bottom-[-6px] left-0 w-full h-[2px] bg-accent-sky"></span></a>
+                    <a href="about.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>About Team</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                    <button id="signout-btn" class="bg-red-500 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-600 transition-all">Sign Out</button>
+                `;
+                document.getElementById('signout-btn').addEventListener('click', () => {
+                    localStorage.removeItem('loggedInUser');
+                    window.location.href = 'index.html';
+                });
+            } else {
+                navMenu.innerHTML = `
+                    <a href="tracker.html" class="group relative text-accent-sky font-bold"><span>Tracker</span><span class="absolute bottom-[-6px] left-0 w-full h-[2px] bg-accent-sky"></span></a>
+                    <a href="about.html" class="group relative text-slate-300 font-medium transition-colors duration-300 hover:text-white"><span>About Team</span><span class="absolute bottom-[-6px] left-0 w-0 h-[2px] bg-accent-sky transition-all duration-300 group-hover:w-full"></span></a>
+                    <a href="signin.html" class="text-accent-sky font-semibold">Sign In</a>
+                    <a href="register.html" class="bg-accent-violet text-white py-2 px-4 rounded-md font-semibold hover:bg-violet-700 transition-all">Register Profile</a>
+                `;
+            }
+
+            // --- MOCK DATA ---
+            let students = [
+                // Alumni
+                {
+                    id: 'A301', name: 'Aditya Mehta', email: 'aditya.mehta@example.com', photoUrl: 'IMAGES/MockImages/A301.jpg'
+                    , profileType: 'Alumnus', school: 'DPS, Ruby Park, Kolkata', class: 'Graduated 2020', dob: '10-Jan-2002', address: 'Mumbai, Maharashtra',
+                    academicRecords: [{ year: 2019, grade: '11th', percentage: 94, achievements: 'KVPY Scholar.' }, { year: 2020, grade: '12th', percentage: 97, achievements: 'School Topper in AISSCE.' }],
+                    collegeRecords: [{ institution: 'IIT Bombay', degree: 'B.Tech in Computer Science', duration: '2020 - 2024', cgpa: '9.2', achievements: 'Published research paper on ML; Head of Coding Club.' }],
+                    internships: [{ company: 'Microsoft', role: 'SWE Intern', duration: 'Summer 2023', description: 'Worked on the Azure cloud platform.' }],
+                    placements: [{ company: 'Google', role: 'Software Engineer', status: 'Accepted', date: 'August 2024' }],
+                    skills: [{ skill: 'Machine Learning', proficiency: 92 }, { skill: 'System Design', proficiency: 88 }, { skill: 'Databases', proficiency: 85 }, { skill: 'Leadership', proficiency: 90 }, { skill: 'Cloud Computing', proficiency: 80 }, { skill: 'Algorithms', proficiency: 95 }],
+                    projects: [{ title: 'Neural Network for Stock Prediction', description: 'An LSTM-based model to predict stock market trends.' }]
+                },
+                {
+                    id: 'A302', name: 'Sneha Reddy', email: 'sneha.reddy@example.com', photoUrl: 'IMAGES/MockImages/A302.png'
+                    , profileType: 'Alumnus', school: 'Hyderabad Public School', class: 'Graduated 2019', dob: '05-May-2001', address: 'Hyderabad, Telangana',
+                    academicRecords: [{ year: 2018, grade: '11th', percentage: 91, achievements: 'Best Speaker award in MUN.' }, { year: 2019, grade: '12th', percentage: 95, achievements: 'Topped Commerce stream.' }],
+                    collegeRecords: [{ institution: 'Shri Ram College of Commerce (SRCC), Delhi', degree: 'B.Com (Honours)', duration: '2019 - 2022', cgpa: '9.5', achievements: 'President of the Finance & Investment Cell.' }],
+                    internships: [{ company: 'Deloitte', role: 'Audit Intern', duration: 'Summer 2021', description: 'Assisted in financial audits for multinational clients.' }],
+                    placements: [{ company: 'Bain & Company', role: 'Associate Consultant', status: 'Working', date: 'July 2022' }],
+                    skills: [{ skill: 'Financial Modeling', proficiency: 95 }, { skill: 'Corporate Finance', proficiency: 90 }, { skill: 'Public Speaking', proficiency: 92 }, { skill: 'Leadership', proficiency: 85 }, { skill: 'Data Analysis', proficiency: 88 }, { skill: 'Strategy', proficiency: 80 }],
+                    projects: [{ title: 'Market Entry Strategy for a Tech Startup', description: 'A comprehensive business plan and financial projection.' }]
+                },
+                {
+                    id: 'A303', name: 'Rohan Malhotra', email: 'rohan.malhotra@example.com', photoUrl: 'IMAGES/MockImages/A303.png'
+                    , profileType: 'Alumnus', school: 'BITS Pilani, K.K. Birla Goa Campus', class: 'Graduated 2021', dob: '12-Dec-2003', address: 'Goa',
+                    academicRecords: [{ year: 2020, grade: '11th', percentage: 91, achievements: 'Robotics Club President.' }, { year: 2021, grade: '12th', percentage: 94, achievements: 'National Cyber Olympiad Rank 50.' }],
+                    collegeRecords: [{ institution: 'BITS Pilani, Goa', degree: 'B.E. in ECE', duration: '2021 - 2025', cgpa: '8.8', achievements: 'Lead for APOGEE tech fest.' }],
+                    internships: [{ company: 'Salesforce', role: 'Product Management Intern', duration: 'Summer 2024', description: 'Developed feature specs for the Sales Cloud.' }],
+                    placements: [],
+                    skills: [{ skill: 'Product Management', proficiency: 85 }, { skill: 'Electronics', proficiency: 90 }, { skill: 'C++', proficiency: 80 }, { skill: 'Team Management', proficiency: 88 }, { skill: 'Agile', proficiency: 82 }],
+                    projects: [{ title: 'IoT based Home Automation', description: 'A system to control home appliances remotely.' }]
+                },
+                {
+                    id: 'A304', name: 'Isha Gupta', email: 'isha.gupta@example.com', photoUrl: 'IMAGES/MockImages/A304.png'
+                    , profileType: 'Alumnus', school: 'Lady Shri Ram College for Women', class: 'Graduated 2022', dob: '25-Jul-2004', address: 'Delhi',
+                    academicRecords: [],
+                    collegeRecords: [{ institution: 'LSR, Delhi University', degree: 'B.A. Economics', duration: '2019 - 2022', cgpa: '9.1', achievements: 'Economics Society Secretary.' }],
+                    internships: [{ company: 'Ernst & Young', role: 'Economic Analyst Intern', duration: 'Winter 2021', description: 'Researched macroeconomic trends.' }],
+                    placements: [{ company: 'Ernst & Young', role: 'Consultant', status: 'Working', date: 'July 2022' }],
+                    skills: [{ skill: 'Economics', proficiency: 94 }, { skill: 'Research', proficiency: 90 }, { skill: 'Statistics', proficiency: 85 }, { skill: 'Communication', proficiency: 92 }],
+                    projects: []
+                },
+
+                // Students
+                {
+                    id: 'S101', name: 'Priya Sharma', email: 'priya.sharma@example.com', photoUrl: 'IMAGES/MockImages/S101.png'
+                    , profileType: 'Student', school: 'Delhi Public School, R.K. Puram', class: '12th Grade (Science)', dob: '15-Aug-2007', address: 'Vasant Kunj, New Delhi',
+                    academicRecords: [{ year: 2023, grade: '10th', percentage: 95, achievements: 'Scored 100 in Mathematics; NTSE Scholar.' }, { year: 2024, grade: '11th', percentage: 92, achievements: 'Topped the Physics Olympiad regional level.' }],
+                    skills: [{ skill: 'Physics', proficiency: 90 }, { skill: 'Mathematics', proficiency: 95 }, { skill: 'Programming', proficiency: 85 }, { skill: 'Public Speaking', proficiency: 80 }, { skill: 'Leadership', proficiency: 88 }, { skill: 'Chemistry', proficiency: 82 }],
+                    extracurriculars: ['Head of the School Debate Club', 'Member of the school cricket team', 'Volunteer at "Teach for India" program'],
+                    projects: [{ title: 'AI-based Waste Segregation Model', description: 'A Python-based model to classify waste.' }]
+                },
+                {
+                    id: 'S102', name: 'Rohan Joshi', email: 'rohan.joshi@example.com', photoUrl: 'IMAGES/MockImages/S102.png'
+                    , profileType: 'Student', school: 'Kendriya Vidyalaya, Bangalore', class: '10th Grade', dob: '22-Mar-2009', address: 'Indiranagar, Bangalore',
+                    academicRecords: [{ year: 2023, grade: '8th', percentage: 85, achievements: 'Active participant in coding club.' }, { year: 2024, grade: '9th', percentage: 88, achievements: 'Won 1st prize in National Science Exhibition.' }],
+                    skills: [{ skill: 'Robotics', proficiency: 92 }, { skill: 'Problem Solving', proficiency: 85 }, { skill: 'C++', proficiency: 80 }, { skill: 'Teamwork', proficiency: 88 }, { skill: 'Creativity', proficiency: 90 }, { skill: 'Physics', proficiency: 78 }],
+                    extracurriculars: ['Keyboard player in school band', 'State-level chess championship'],
+                    projects: [{ title: 'Smart Irrigation System', description: 'An Arduino-based project to automate watering plants.' }]
+                },
+                {
+                    id: 'S103', name: 'Arjun Verma', email: 'arjun.verma@example.com', photoUrl: 'IMAGES/MockImages/S103.png'
+                    , profileType: 'Student', school: 'Maharaja Sawai Man Singh Vidyalaya, Jaipur', class: '11th Grade (Arts)', dob: '02-Feb-2008', address: 'Jaipur, Rajasthan',
+                    academicRecords: [{ year: 2023, grade: '9th', percentage: 89, achievements: 'Won inter-school essay competition.' }, { year: 2024, grade: '10th', percentage: 91, achievements: 'School magazine editor.' }],
+                    skills: [{ skill: 'Writing', proficiency: 95 }, { skill: 'History', proficiency: 90 }, { skill: 'Public Speaking', proficiency: 85 }, { skill: 'Research', proficiency: 80 }],
+                    extracurriculars: ['Editor of School Magazine', 'Dramatics Club'],
+                    projects: []
+                },
+                {
+                    id: 'S104', name: 'Saanvi Patil', email: 'saanvi.patil@example.com', photoUrl: 'IMAGES/MockImages/S104.png'
+                    , profileType: 'Student', school: 'Symbiosis International School, Pune', class: '9th Grade', dob: '19-Nov-2010', address: 'Pune, Maharashtra',
+                    academicRecords: [{ year: 2024, grade: '8th', percentage: 93, achievements: 'Gold medal in school art competition.' }],
+                    skills: [{ skill: 'Art & Design', proficiency: 94 }, { skill: 'Java', proficiency: 80 }, { skill: 'UI/UX Basics', proficiency: 75 }],
+                    extracurriculars: ['Art Club', 'Learning Java online'],
+                    projects: [{ title: 'Personal Portfolio Website', description: 'Designed and coded a simple portfolio using HTML/CSS.' }]
+                }
+            ];
+            let teachers = [
+                {
+                    id: 'T201', name: 'Dr. Anjali Verma', email: 'anjali.verma@example.com', photoUrl: 'IMAGES/MockImages/T201.png'
+                    , school: 'Delhi Public School, R.K. Puram', subject: 'Physics (PGT)', experience: '15 Years', qualifications: ['Ph.D. in Quantum Physics, IIT Delhi', 'M.Sc. in Physics, University of Delhi'], performanceReviews: [{ year: 2024, rating: 4.8, feedback: 'Excellent student engagement and innovative teaching methods.' }, { year: 2023, rating: 4.7, feedback: 'Contributed significantly to the science curriculum.' }]
+                },
+                {
+                    id: 'T202', name: 'Mr. Vikram Singh', email: 'vikram.singh@example.com', photoUrl: 'IMAGES/MockImages/T202.png'
+                    , school: 'Kendriya Vidyalaya, Bangalore', subject: 'Computer Science (TGT)', experience: '8 Years', qualifications: ['M.Tech in Computer Science, NIT Warangal', 'B.Tech in IT, VTU'], performanceReviews: [{ year: 2024, rating: 4.9, feedback: 'Mentored the winning team for the National Informatics Olympiad.' }, { year: 2023, rating: 4.6, feedback: 'Integrated new programming languages into the syllabus.' }]
+                },
+                {
+                    id: 'T203', name: 'Dr. Rajani Pillai', email: 'rajani.pillai@example.com', photoUrl: 'IMAGES/MockImages/T203.png'
+                    , school: 'IISc Bangalore', subject: 'Professor, Materials Engineering', experience: '22 Years', qualifications: ['Ph.D. from MIT', 'Post-doctorate from Caltech'], performanceReviews: [{ year: 2024, rating: 4.9, feedback: 'Published 5 papers in leading international journals.' }]
+                },
+                {
+                    id: 'T204', name: 'Mrs. Fatima Khan', email: 'fatima.khan@example.com', photoUrl: 'IMAGES/MockImages/T204.png'
+                    , school: 'The Doon School, Dehradun', subject: 'English Literature', experience: '18 Years', qualifications: ['M.A. in English from Jadavpur University'], performanceReviews: [{ year: 2024, rating: 4.7, feedback: 'Organized the annual literary festival with great success.' }]
+                },
+                {
+                    id: 'T205', name: 'Mr. Anand Joshi', email: 'anand.joshi@example.com', photoUrl: 'IMAGES/MockImages/T205.png'
+                    , school: 'FIITJEE, Kota', subject: 'Mathematics', experience: '10 Years', qualifications: ['B.Tech from IIT Kanpur'], performanceReviews: [{ year: 2024, rating: 4.9, feedback: 'Highest number of students qualifying for JEE Advanced from his batch.' }]
+                },
+                {
+                    id: 'T206', name: 'Dr. Priya Krishnan', email: 'priya.krishnan@example.com', photoUrl: 'IMAGES/MockImages/T206.png'
+                    , school: 'Jawaharlal Nehru University (JNU)', subject: 'Professor, Ancient History', experience: '25 Years', qualifications: ['Ph.D. in History from University of Oxford'], performanceReviews: [{ year: 2023, rating: 4.8, feedback: 'Authored a book on the Indus Valley Civilization.' }]
+                }
+            ];
+
+            const customStudents = JSON.parse(localStorage.getItem('customStudents')) || [];
+            const customTeachers = JSON.parse(localStorage.getItem('customTeachers')) || [];
+            const allStudents = [...students, ...customStudents];
+            const allTeachers = [...teachers, ...customTeachers];
+            const allProfiles = [...allStudents, ...allTeachers];
+
+            const searchButton = document.getElementById('search-button');
+            const searchQuery = document.getElementById('search-query');
+            const resultsContainer = document.getElementById('results-container');
+            const otpModal = document.getElementById('otp-modal');
+            const otpProfileName = document.getElementById('otp-profile-name');
+            const otpInput = document.getElementById('otp-input');
+            const otpVerifyBtn = document.getElementById('otp-verify-btn');
+            const otpCancelBtn = document.getElementById('otp-cancel-btn');
+            const otpError = document.getElementById('otp-error');
+            const otpPrototypeInfo = document.getElementById('otp-prototype-info');
+
+            let profileToVerify = null;
+            let generatedOtp = null;
+
+            function findAndRenderProfile(profileId) {
+                const profile = allProfiles.find(p => p.id === profileId);
+                if (profile) {
+                    const type = profile.id.charAt(0) === 'T' ? 'teacher' : 'student';
+                    renderProfile(profile, type);
+                } else {
+                    resultsContainer.innerHTML = generateMessageCard('Your profile could not be loaded.');
+                }
+            }
+
+            if (loggedInUser) {
+                findAndRenderProfile(loggedInUser.profileId);
+            }
+
+            searchButton.addEventListener('click', performSearch);
+            searchQuery.addEventListener('keyup', (event) => { if (event.key === 'Enter') performSearch(); });
+
+            function performSearch() {
+                resultsContainer.innerHTML = '';
+                const query = searchQuery.value.trim().toLowerCase();
+                if (!query) {
+                    resultsContainer.innerHTML = generateMessageCard('Please enter a Profile ID to search.');
+                    return;
+                }
+
+                const result = allProfiles.find(p => p.id.toLowerCase() === query);
+
+                if (result) {
+                    profileToVerify = result;
+                    generatedOtp = Math.floor(100000 + Math.random() * 900000);
+
+                    otpProfileName.textContent = result.name;
+                    otpPrototypeInfo.textContent = `(Prototype OTP: ${generatedOtp})`;
+                    otpInput.value = '';
+                    otpError.classList.add('hidden');
+                    otpModal.classList.remove('hidden');
+
+                } else {
+                    resultsContainer.innerHTML = generateMessageCard('Profile not found.', 'No profile matched your search ID. Please try again.');
+                }
+            }
+
+            otpVerifyBtn.addEventListener('click', () => {
+                if (otpInput.value == generatedOtp) {
+                    otpModal.classList.add('hidden');
+                    const profileType = profileToVerify.id.charAt(0) === 'T' ? 'teacher' : 'student';
+                    renderProfile(profileToVerify, profileType);
+                } else {
+                    otpError.classList.remove('hidden');
+                }
+            });
+
+            otpCancelBtn.addEventListener('click', () => {
+                otpModal.classList.add('hidden');
+                profileToVerify = null;
+                generatedOtp = null;
+            });
+
+            function renderProfile(data, type) {
+                if (!data) return;
+                const profileCard = document.createElement('div');
+                profileCard.className = 'animate-on-scroll';
+                profileCard.innerHTML = type === 'student' ? generateStudentHTML(data) : generateTeacherHTML(data);
+                resultsContainer.innerHTML = '';
+                resultsContainer.appendChild(profileCard);
+
+                if (type === 'student' && data.skills && data.skills.length > 0) {
+                    initializeCharts(data);
+                }
+
+                setTimeout(() => profileCard.classList.add('is-visible'), 50);
+            }
+
+            function generateMessageCard(title, message = '') {
+                return `<div class="text-center py-10 px-6 bg-slate-900/40 rounded-lg shadow-sm border border-slate-700/50"><svg class="mx-auto h-12 w-12 text-slate-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" /></svg><h3 class="mt-2 text-sm font-semibold text-slate-200">${title}</h3>${message ? `<p class="mt-1 text-sm text-slate-400">${message}</p>` : ''}</div>`;
+            }
+
+            function generateStudentHTML(s) {
+                let html = `<div class="bg-slate-900/50 rounded-2xl shadow-xl p-6 md:p-8 border border-slate-700/60 backdrop-blur-sm">`;
+
+                html += `<div class="flex flex-col sm:flex-row items-start gap-8">
+                    <img class="w-32 h-32 rounded-full object-cover ring-4 ring-accent-violet/50" src="${s.photoUrl}" alt="${s.name}">
+                    <div class="text-center sm:text-left flex-grow">
+                        <div class="flex items-center gap-4 justify-center sm:justify-start">
+                           <h2 class="font-serif text-3xl font-bold text-white">${s.name}</h2>
+                           <span class="text-xs font-bold py-1 px-3 rounded-full ${s.profileType === 'Alumnus' ? 'bg-accent-emerald/20 text-accent-emerald' : 'bg-accent-sky/20 text-accent-sky'}">${s.profileType || 'Student'}</span>
+                        </div>
+                        <p class="text-accent-violet font-semibold text-lg">${s.id} | ${s.class || ''}</p>
+                        <p class="text-slate-400 mt-1">${s.school || ''}</p>
+                        <p class="text-slate-400 text-sm">DOB: ${s.dob || 'N/A'} | Address: ${s.address || 'N/A'}</p>
+                        <div class="flex items-center gap-2 mt-2 justify-center sm:justify-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            <a href="mailto:${s.email}" class="text-sm text-slate-400 hover:text-accent-sky">${s.email || 'N/A'}</a>
+                        </div>
+                    </div>`;
+
+                if (loggedInUser && loggedInUser.profileId === s.id) {
+                    html += `<a href="edit-profile.html" class="bg-accent-sky/80 text-white py-2 px-4 rounded-md font-semibold hover:bg-accent-sky transition-all text-sm">Edit Profile</a>`;
+                }
+
+                html += `</div>`;
+
+                html += `<div class="mt-10">
+                    <h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-6">Educational & Career Journey</h3>
+                    <div class="relative pl-6 border-l-2 border-slate-700">`;
+
+                if (s.academicRecords && s.academicRecords.length > 0) s.academicRecords.forEach(r => {
+                    html += `<div class="mb-8 last:mb-0">
+                        <div class="absolute -left-[11px] w-5 h-5 bg-accent-sky rounded-full border-4 border-brand-dark"></div>
+                        <p class="font-semibold text-slate-200">${r.grade} Grade (${r.year}) - <span class="font-bold text-accent-sky">${r.percentage}%</span></p>
+                        <p class="text-sm text-slate-400">${r.achievements}</p>
+                    </div>`;
+                });
+                if (s.collegeRecords && s.collegeRecords.length > 0) s.collegeRecords.forEach(r => {
+                    html += `<div class="mb-8 last:mb-0">
+                        <div class="absolute -left-[11px] w-5 h-5 bg-accent-violet rounded-full border-4 border-brand-dark"></div>
+                         <p class="font-semibold text-slate-200">${r.degree} (${r.duration})</p>
+                         <p class="font-medium text-slate-300">${r.institution} - <span class="font-bold text-accent-violet">${r.cgpa} CGPA</span></p>
+                        <p class="text-sm text-slate-400">${r.achievements || ''}</p>
+                    </div>`;
+                });
+                if (s.internships && s.internships.length > 0) s.internships.forEach(r => {
+                    html += `<div class="mb-8 last:mb-0">
+                        <div class="absolute -left-[11px] w-5 h-5 bg-accent-amber rounded-full border-4 border-brand-dark"></div>
+                         <p class="font-semibold text-slate-200">${r.role} at ${r.company} (${r.duration})</p>
+                        <p class="text-sm text-slate-400">${r.description || ''}</p>
+                    </div>`;
+                });
+                if (s.placements && s.placements.length > 0) s.placements.forEach(r => {
+                    html += `<div class="mb-8 last:mb-0">
+                        <div class="absolute -left-[11px] w-5 h-5 bg-accent-emerald rounded-full border-4 border-brand-dark"></div>
+                         <p class="font-semibold text-slate-200">${r.role} at ${r.company}</p>
+                         <p class="font-medium text-slate-300">${r.status} - Joining: ${r.date}</p>
+                    </div>`;
+                });
+
+                html += `</div></div>`;
+
+                if (s.skills && s.skills.length > 0) {
+                    html += `<div class="mt-10">
+                        <h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-6">Performance Analysis</h3>
+                        <div class="grid md:grid-cols-2 gap-8 items-center">
+                            <div class="bg-slate-800/40 p-4 rounded-lg border border-slate-700/60">
+                                <h4 class="font-semibold text-center text-slate-300 mb-2">Yearly Performance</h4>
+                                <canvas id="performanceChart"></canvas>
+                            </div>
+                            <div class="bg-slate-800/40 p-4 rounded-lg border border-slate-700/60">
+                                <h4 class="font-semibold text-center text-slate-300 mb-2">Skill Proficiency</h4>
+                                <canvas id="skillsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>`;
+                }
+
+                html += `<div class="mt-8 grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-4">Extracurriculars</h3>
+                        <ul class="list-disc list-inside space-y-2 text-slate-300">${s.extracurriculars?.map(a => `<li>${a}</li>`).join('') || '<li>N/A</li>'}</ul>
+                    </div>
+                    <div>
+                        <h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-4">Projects</h3>
+                        ${s.projects?.map(p => `<div class="bg-slate-800/50 p-4 rounded-lg border border-slate-700"><p class="font-semibold text-slate-200">${p.title}</p><p class="text-sm text-slate-400">${p.description}</p></div>`).join('') || '<p class="text-sm text-slate-400">No projects listed.</p>'}
+                    </div>
+                </div>`;
+
+                html += `</div>`;
+                return html;
+            }
+
+            function generateTeacherHTML(t) {
+                let html = `<div class="bg-slate-900/50 rounded-2xl shadow-xl p-8 border border-slate-700/60 backdrop-blur-sm">`;
+                html += `<div class="flex flex-col sm:flex-row items-start gap-8">`;
+                html += `<img class="w-32 h-32 rounded-full object-cover ring-4 ring-accent-amber/50" src="${t.photoUrl}" alt="${t.name}">`;
+                html += `<div class="text-center sm:text-left flex-grow">`;
+                html += `<h2 class="font-serif text-3xl font-bold text-white">${t.name}</h2>`;
+                html += `<p class="text-accent-amber font-semibold text-lg">${t.id} | ${t.subject}</p>`;
+                html += `<p class="text-slate-400 mt-1">${t.school}</p>`;
+                html += `<p class="text-slate-400 text-sm">Experience: ${t.experience}</p>`;
+                html += `<div class="flex items-center gap-2 mt-2 justify-center sm:justify-start">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                            <a href="mailto:${t.email}" class="text-sm text-slate-400 hover:text-accent-sky">${t.email || 'N/A'}</a>
+                        </div>`;
+                html += `</div>`;
+                if (loggedInUser && loggedInUser.profileId === t.id) {
+                    html += `<a href="edit-profile.html" class="bg-accent-sky/80 text-white py-2 px-4 rounded-md font-semibold hover:bg-accent-sky transition-all text-sm">Edit Profile</a>`;
+                }
+                html += `</div>`;
+
+                html += `<div class="mt-10">`;
+                html += `<h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-4">Qualifications</h3>`;
+                html += `<ul class="list-disc list-inside space-y-2 text-slate-300">${t.qualifications.map(q => `<li>${q}</li>`).join('')}</ul>`;
+                html += `</div>`;
+                html += `<div class="mt-8">`;
+                html += `<h3 class="font-serif text-xl font-bold text-white border-b border-slate-700 pb-2 mb-4">Performance Reviews</h3>`;
+                html += `<div class="space-y-4">${t.performanceReviews?.map(r => `<div class="bg-slate-800/50 p-4 rounded-lg border border-slate-700"><p class="font-semibold text-slate-200">${r.year} - Rating: ${r.rating}/5.0</p><p class="text-sm text-slate-400 italic">"${r.feedback}"</p></div>`).join('') || '<p class="text-sm text-slate-400">No reviews available.</p>'}</div>`;
+                html += `</div>`;
+                html += `</div>`;
+                return html;
+            }
+
+            function initializeCharts(studentData) {
+                const performanceCtx = document.getElementById('performanceChart')?.getContext('2d');
+                const skillsCtx = document.getElementById('skillsChart')?.getContext('2d');
+                if (!performanceCtx || !skillsCtx) return;
+
+                const chartTextColor = 'rgb(203 213 225)';
+                const chartGridColor = 'rgba(100, 116, 139, 0.2)';
+
+                let performanceLabels = [];
+                let performanceData = [];
+
+                if (studentData.academicRecords) {
+                    performanceLabels.push(...studentData.academicRecords.map(r => r.grade));
+                    performanceData.push(...studentData.academicRecords.map(r => r.percentage));
+                }
+
+                if (studentData.collegeRecords && studentData.collegeRecords.length > 0 && studentData.collegeRecords[0].cgpa) {
+                    performanceLabels.push(studentData.collegeRecords[0].degree.split(' ')[0]); // e.g. "B.Tech"
+                    performanceData.push(parseFloat(studentData.collegeRecords[0].cgpa) * 9.5); // Convert CGPA to percentage
+                }
+
+                if (performanceData.length > 0) {
+                    new Chart(performanceCtx, {
+                        type: 'line',
+                        data: { labels: performanceLabels, datasets: [{ label: 'Performance', data: performanceData, borderColor: 'rgb(56, 189, 248)', backgroundColor: 'rgba(56, 189, 248, 0.2)', fill: true, tension: 0.3 }] },
+                        options: { responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: false, min: 70, ticks: { color: chartTextColor }, grid: { color: chartGridColor } }, x: { ticks: { color: chartTextColor }, grid: { color: chartGridColor } } } }
+                    });
+                }
+
+                if (studentData.skills && studentData.skills.length > 0) {
+                    new Chart(skillsCtx, {
+                        type: 'radar',
+                        data: { labels: studentData.skills.map(s => s.skill), datasets: [{ label: 'Proficiency', data: studentData.skills.map(s => s.proficiency), backgroundColor: 'rgba(139, 92, 246, 0.2)', borderColor: 'rgb(139, 92, 246)', pointBackgroundColor: 'rgb(139, 92, 246)' }] },
+                        options: { responsive: true, plugins: { legend: { display: false } }, scales: { r: { beginAtZero: true, max: 100, angleLines: { color: chartGridColor }, grid: { color: chartGridColor }, pointLabels: { color: chartTextColor, font: { size: 11 } }, ticks: { backdropColor: '#0B0F19', color: chartTextColor } } } }
+                    });
+                }
+            }
+
+            const observers = new IntersectionObserver((entries) => {
+                entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observers.unobserve(entry.target); } });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observers.observe(el));
+        });
+    </script>
+</body>
+
+</html>

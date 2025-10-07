@@ -1,48 +1,93 @@
-Promptus - A Unified Education Data Hub
-Promptus is a front-end web application prototype designed for the Smart India Hackathon (SIH). It serves as a centralized platform to create, manage, and securely track the complete educational and professional journey of students, alumni, and teachers. The project aims to solve the problem of scattered educational data by providing a single, verifiable source of truth.
-This project is built entirely with front-end technologies and uses browser localStorage to simulate a back-end database for user registration and profile management, making it fully functional for demonstration purposes.
-✨ Key Features
-Full User Authentication:
-Registration: Users can create a secure account with an email and password.
-Sign In/Sign Out: A complete session management system using localStorage.
-Dynamic Navbar: The navigation bar intelligently updates to show relevant links based on the user's authentication status.
-Comprehensive Profile Management:
-Multi-Role Registration: Users can create detailed profiles for Students, Alumni, or Teachers.
-Auto-Generated IDs: Unique IDs are automatically created upon registration for enhanced security.
-Edit Profile: Signed-in users can easily edit and update their own profile information.
-Secure Profile Tracking:
-ID-Only Search: Profiles can only be searched using their unique ID, preventing unauthorized data mining.
-OTP Verification (Prototype): An OTP-style verification system is in place to demonstrate consent-based access to sensitive profile data.
-Rich Data Visualization:
-Career Journey Timeline: An elegant vertical timeline that visualizes a person's entire journey, from school achievements to college, internships, and placements.
-Performance Analytics: Integrated Chart.js to display dynamic line graphs for academic performance and radar charts for skill proficiency.
-Team & Project Information:
-About Team Page: A dedicated page to showcase the members of the project team.
-Modern UI/UX: A sleek, dark-themed, and fully responsive design inspired by modern web standards, ensuring a great user experience on any device.
-🚀 Technology Stack
-This project is built with a modern, front-end only stack:
-HTML5: For the core structure and content.
-Tailwind CSS: For all styling, enabling a responsive and utility-first design.
-JavaScript (ES6+): For all client-side logic, including authentication, dynamic content rendering, and interactivity.
-Chart.js: For creating beautiful and interactive data visualizations.
-🏃‍♂️ How to Run
-This is a pure front-end application and requires no special setup or server.
-Download the Files: Ensure you have all the HTML files (index.html, tracker.html, etc.) in the same directory.
-Open in Browser: Simply open the index.html file in any modern web browser (like Chrome, Firefox, or Edge).
-That's it! The website will be fully functional, and any profiles you create will be saved in your browser's local storage.
-📂 File Structure
-index.html: The main landing page of the application.
-tracker.html: The core page for searching and viewing profiles.
-register.html: The multi-step form for new user registration.
-signin.html: The login page for existing users.
-about.html: The page showcasing the project team.
-edit-profile.html: The form for users to edit their own data.
-👥 Team
-This project was brought to life by The Hashiras:
-Aarav Sharma: Team Lead & Full-Stack Developer
-Diya Patel: Lead UI/UX Designer
-Rohan Gupta: Frontend Specialist
-Ananya Singh: Data Architect & Analyst
-Vivaan Kumar: DevOps & Testing
-Isha Verma: Project Documentation & Research
-Project by The Hashiras for SIH.
+# PS Chosen SIH Hackathon
+
+This README provides an overview of the project, including team details, relevant links, tasks completed, tech stack, key features, and steps to run the project locally.
+
+## Team Details
+
+**Team Name:** The Hashiras
+
+**Team Leader:** Anurag Maurya [GITHUB](https://github.com/anurag-maurya-ece/)
+
+**Team Members:**
+
+# Promptus — PS Chosen SIH Hackathon
+
+Promptus is a small static web project created as a prototype and presentation for the PS Chosen SIH Hackathon. It is a lightweight, dependency-free frontend built with plain HTML and CSS.
+
+## Quick summary
+
+- Type: Static website (HTML, CSS)
+- Purpose: Prototype / presentation for the SIH Hackathon
+- How to view: Open `index.html` in a browser or serve the folder with a simple HTTP server
+
+## Files of interest
+
+- `index.html` — Landing / main page
+- `about.html` — About the project
+- `register.html`, `signin.html`, `edit-profile.html` — Sample auth/profile pages
+- `tracker.html` — Tracker / demo page
+- `style.css` — Global styles
+- `IMAGES/` — Team photos and mock images used in the prototype
+
+## How to run locally
+
+Open the site directly in a browser by double-clicking `index.html`, or from PowerShell run:
+
+```powershell
+Start-Process .\index.html
+```
+
+Or serve files with Python 3's simple HTTP server:
+
+```powershell
+python -m http.server 8000
+# then open http://localhost:8000 in your browser
+```
+
+## Tech stack
+
+- HTML5
+- CSS3
+
+No build tools or external dependencies are required.
+
+## Team — The Hashiras
+
+Team members and roles (photos embedded from the `IMAGES/` folder). If an image does not display, check that the matching filename exists in `IMAGES/` (some filenames contain spaces). Use the file path exactly as shown below.
+
+- Anurag Maurya — Team Lead, Visionary & Web Developer  
+	![Anurag Maurya](IMAGES/anurag%20maurya.jpg)
+
+- Mayank — Core Web Developer  
+	![Mayank](IMAGES/mayank.jpg)
+
+- Vaishnavi — UI/UX & Presentation Designer  
+	![Vaishnavi](IMAGES/Vaishnavi%20.jpg)
+
+- Sia — Presentation Specialist  
+	![Sia](IMAGES/Sia.jpg)
+
+- Smarth — Quality Assurance (QA) Analyst  
+	![Smarth](IMAGES/smarath.jpg)
+
+- Shaina — Lead Presenter  
+	![Shaina](IMAGES/shaina2.jpg)
+
+## Contribution
+
+This repository contains the hackathon deliverable. To contribute UI improvements, accessibility fixes, or to wire up a backend, please open an issue or submit a pull request.
+
+## Notes
+
+- Some image filenames include spaces (for example `anurag maurya.jpg` and `Vaishnavi .jpg`). When embedding images in Markdown or HTML, spaces are URL-encoded as `%20`.
+- The project is static — there is no build step.
+
+---
+
+If you'd like, I can:
+
+1. Create a gallery page that lays out team photos and resizes them responsively.
+2. Add small thumbnails in an `assets/` folder and update the README to use them.
+3. Add GitHub links or contact details for each member.
+
+Tell me which of the above you'd like next.

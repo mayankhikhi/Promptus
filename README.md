@@ -1,93 +1,81 @@
-# PS Chosen SIH Hackathon
+# Promptus - A Unified Education Data Hub
 
-This README provides an overview of the project, including team details, relevant links, tasks completed, tech stack, key features, and steps to run the project locally.
+**Promptus** is a front-end web application prototype designed for the **Smart India Hackathon (SIH)**.  
+It serves as a **centralized platform** to create, manage, and securely track the complete educational and professional journey of students, alumni, and teachers.  
+The project aims to solve the problem of *scattered educational data* by providing a **single, verifiable source of truth**.
 
-## Team Details
-
-**Team Name:** The Hashiras
-
-**Team Leader:** Anurag Maurya [GITHUB](https://github.com/anurag-maurya-ece/)
-
-**Team Members:**
-
-# Promptus — PS Chosen SIH Hackathon
-
-Promptus is a small static web project created as a prototype and presentation for the PS Chosen SIH Hackathon. It is a lightweight, dependency-free frontend built with plain HTML and CSS.
-
-## Quick summary
-
-- Type: Static website (HTML, CSS)
-- Purpose: Prototype / presentation for the SIH Hackathon
-- How to view: Open `index.html` in a browser or serve the folder with a simple HTTP server
-
-## Files of interest
-
-- `index.html` — Landing / main page
-- `about.html` — About the project
-- `register.html`, `signin.html`, `edit-profile.html` — Sample auth/profile pages
-- `tracker.html` — Tracker / demo page
-- `style.css` — Global styles
-- `IMAGES/` — Team photos and mock images used in the prototype
-
-## How to run locally
-
-Open the site directly in a browser by double-clicking `index.html`, or from PowerShell run:
-
-```powershell
-Start-Process .\index.html
-```
-
-Or serve files with Python 3's simple HTTP server:
-
-```powershell
-python -m http.server 8000
-# then open http://localhost:8000 in your browser
-```
-
-## Tech stack
-
-- HTML5
-- CSS3
-
-No build tools or external dependencies are required.
-
-## Team — The Hashiras
-
-Team members and roles (photos embedded from the `IMAGES/` folder). If an image does not display, check that the matching filename exists in `IMAGES/` (some filenames contain spaces). Use the file path exactly as shown below.
-
-- Anurag Maurya — Team Lead, Visionary & Web Developer  
-	![Anurag Maurya](IMAGES/anurag%20maurya.jpg)
-
-- Mayank — Core Web Developer  
-	![Mayank](IMAGES/mayank.jpg)
-
-- Vaishnavi — UI/UX & Presentation Designer  
-	![Vaishnavi](IMAGES/Vaishnavi%20.jpg)
-
-- Sia — Presentation Specialist  
-	![Sia](IMAGES/Sia.jpg)
-
-- Smarth — Quality Assurance (QA) Analyst  
-	![Smarth](IMAGES/smarath.jpg)
-
-- Shaina — Lead Presenter  
-	![Shaina](IMAGES/shaina2.jpg)
-
-## Contribution
-
-This repository contains the hackathon deliverable. To contribute UI improvements, accessibility fixes, or to wire up a backend, please open an issue or submit a pull request.
-
-## Notes
-
-- Some image filenames include spaces (for example `anurag maurya.jpg` and `Vaishnavi .jpg`). When embedding images in Markdown or HTML, spaces are URL-encoded as `%20`.
-- The project is static — there is no build step.
+This project is built entirely with **front-end technologies** and uses **browser localStorage** to simulate a back-end database for user registration and profile management, making it **fully functional for demonstration purposes**.
 
 ---
 
-If you'd like, I can:
+## ✨ Key Features
 
-1. Create a gallery page that lays out team photos and resizes them responsively.
-2. Add small thumbnails in an `assets/` folder and update the README to use them.
-3. Add GitHub links or contact details for each member.
+### Full User Authentication
+- **Registration**: Secure account creation with email and password.
+- **Sign In/Sign Out**: Complete session management via `localStorage`.
+- **Dynamic Navbar**: Navigation updates automatically based on authentication status.
 
-Tell me which of the above you'd like next.
+### Comprehensive Profile Management
+- **Multi-Role Registration**: Profiles for Students, Alumni, or Teachers.
+- **Auto-Generated IDs**: Unique IDs generated upon registration.
+- **Edit Profile**: Easily update your profile information.
+
+### Secure Profile Tracking
+- **ID-Only Search**: Prevents unauthorized profile searches.
+- **OTP Verification (Prototype)**: Consent-based access to sensitive profile data.
+
+### Rich Data Visualization
+- **Career Journey Timeline**: Displays academic and career milestones.
+- **Performance Analytics**: Dynamic line graphs and radar charts via Chart.js.
+
+### Team & Project Information
+- **About Team Page**: Showcases project members.
+- **Modern UI/UX**: Sleek, dark-themed, responsive design.
+
+---
+
+## 🚀 Technology Stack
+
+- **HTML5**: Core structure and content.
+- **Tailwind CSS**: Utility-first responsive styling.
+- **JavaScript (ES6+)**: Client-side logic, authentication, dynamic rendering.
+- **Chart.js**: Interactive data visualizations.
+
+---
+
+## 🏃‍♂️ How to Run
+
+This is a **pure front-end application** and requires no server setup.
+
+1. **Download the Files**  
+   Ensure all HTML files (`index.html`, `tracker.html`, etc.) are in the same directory.
+
+2. **Open in Browser**  
+   Launch `index.html` in any modern web browser (Chrome, Firefox, Brave).
+
+That's it! Profiles are saved directly to your browser's local storage.
+
+---
+
+## 📂 File Structure
+
+- `index.html` – Main landing page.
+- `tracker.html` – Search and view profiles.
+- `register.html` – Multi-step registration form.
+- `signin.html` – Login page.
+- `about.html` – Project team information.
+- `edit-profile.html` – Edit existing profile data.
+
+---
+
+## 👥 Team - *The Hashiras*
+
+- **Anurag Maurya** – Team Leader & WebDeveloper
+- **Mayank Kumar** – Lead Developer
+- **Sia Goel** – Presentation Designer
+- **Vaishnavi** – Presentation Designer
+- **Smarth Sharma** – Quality Assurance (QA) Testor
+- **Shaina Sreshtha** – Lead Presentator
+Project created by **The Hashiras** for **SIH**.
+
+---
